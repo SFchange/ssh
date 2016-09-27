@@ -1,8 +1,11 @@
 package com.bianfeng.ssh.services;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.bianfeng.ssh.dao.ProductDao;
 import com.bianfeng.ssh.domain.Product;
 
+@Transactional
 public class ProductServices {
 	// 业务层注入Dao层的类
 	private ProductDao productDao;
