@@ -10,7 +10,8 @@ import com.opensymphony.xwork2.ModelDriven;
  * 
  * @author sf
  */
-public class ProductAction extends ActionSupport implements ModelDriven<Product> {
+public class ProductAction extends ActionSupport implements
+		ModelDriven<Product> {
 	// 模型驱动所使用的类
 	private Product product;
 
@@ -27,4 +28,14 @@ public class ProductAction extends ActionSupport implements ModelDriven<Product>
 		this.productServices = productServices;
 	}
 
+	/**
+	 * 商品保存方法
+	 * 
+	 * @return
+	 */
+	public String save() {
+		System.out.println("Action中的save方法.......");
+		productServices.save(product);
+		return NONE;
+	}
 }

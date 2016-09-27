@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	<context:annotation-config />
 
-	<context:component-scan base-package="com.bf.spring"></context:component-scan>
-
-	<!-- 注册拦截器 -->
-	<mvc:interceptors>
-		<bean class="com.bf.spring.interceptor.TestInterceptor"></bean>
-	</mvc:interceptors>
+	<!-- 引入外部的配置文件 -->
+	<context:property-placeholder location="classpath:jabc.properties" />
+	<!-- 配置连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClass}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.userbaem}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<!-- 配置Hibernate的相关属性 -->
+	<bean id="productAction" class="com.bianfeng.ssh.action.ProductAction"
+		scope="prototype">
+		<!-- scope="prototype" 支持多例创建 -->
+		<!-- 手动注入services 可以使用aop增强操作 -->
+		<property name="productServices" ref="productServices" />
+	</bean>
+	<!-- 配置业务层的类 -->
+	<bean id="productServices" class="com.bianfeng.ssh.services.ProductServices">
+		<property name="productDao" ref="productDao" />
+	</bean>
+	<!-- 配置Dao的类 -->
+	<bean id="productDao" class="com.bianfeng.ssh.dao.ProductDao"></bean>
 </beans>

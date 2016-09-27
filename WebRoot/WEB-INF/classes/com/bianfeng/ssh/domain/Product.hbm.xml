@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.bianfeng.ssh.domain.Product" table="Product">
+		<!-- 主键Id -->
+		<id name="pid" column="pid">
+			<generator class="native"></generator>
+		</id>
+		<!-- name对应的是product实体类的属性 column对应的是数据表中的列 -->
+		<property name="pname" column="pname"></property>
+		<property name="price" column="price"></property>
+	</class>
+</hibernate-mapping>
